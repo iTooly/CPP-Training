@@ -28,7 +28,7 @@ void Event::set() const
 	}
 }
 
-void Event::listen() const
+void Event::wait() const
 {
 	uint32_t status = WaitForSingleObject(m_handle, INFINITE);
 

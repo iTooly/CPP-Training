@@ -3,7 +3,9 @@
 
 #include <map>
 
-class Config
+constexpr const wchar_t* EVENT_NAME_KEY = L"event_name";
+
+class Config final
 {
 public:
 	explicit Config(const std::filesystem::path& path);
@@ -17,7 +19,7 @@ public:
 	Config operator=(Config&&) = delete;
 
 private:
-	void parse();
+	static std::map<std::wstring, std::wstring> parse(const File& file);
 
 	File m_source;
 	std::map<std::wstring, std::wstring> m_params;

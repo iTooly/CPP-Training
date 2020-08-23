@@ -11,7 +11,7 @@ public:
 	~Event();
 
 	void set() const;
-	void listen() const;
+	void wait() const;
 
 	Event(const Event&) = delete;
 	Event(Event&&) = delete;
@@ -19,7 +19,7 @@ public:
 	Event operator=(Event&&) = delete;
 
 private:
-	static HANDLE open(const std::wstring& path);
+	static HANDLE open(const std::wstring& name);
 
 	HANDLE m_handle;
 };

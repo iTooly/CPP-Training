@@ -1,15 +1,9 @@
+#include "Main.hpp"
 #include "Event.hpp"
 #include "Config.hpp"
 #include "Utils.hpp"
 
 #include <exception>
-
-enum FileArgs
-{
-	EXE_PATH,
-	CONFIG_PATH,
-	ARGS_COUNT
-};
 
 int wmain(const uint32_t argc, wchar_t* argv[])
 {
@@ -18,12 +12,8 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 			throw std::exception("Config file is missing! usage: program.exe <config_path>");
 		}
 
-		constexpr const wchar_t* EVENT_NAME_KEY = L"event_name";
-
 		Config config(argv[CONFIG_PATH]);
-		Event event(config.get(EVENT_NAME_KEY));
-		
-		event.set();
+		run(config);
 
 		return EXIT_SUCCESS;
 	}
@@ -35,4 +25,10 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 	}
 
 	return EXIT_FAILURE;
+}
+
+static void run(const Config& config)
+{
+	Event event(config.get(EVENT_NAME_KEY));
+	event.set();
 }

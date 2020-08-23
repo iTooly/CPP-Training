@@ -7,24 +7,15 @@
 File::File(const std::filesystem::path& path)
 	: m_handle(open(path)) { }
 
-uint8_t File::read() const
+File::~File()
 {
-	constexpr LPOVERLAPPED NO_OVERLAP = nullptr;
-
-	uint8_t byte = 0;
-	DWORD number_of_bytes_read = 0;
-
-	const BOOL status = ReadFile(m_handle, &byte, sizeof(uint8_t), &number_of_bytes_read, NO_OVERLAP);
-
-	if (status == FALSE) {
-		throw std::exception("An error has occurred while trying to read the file.");
+	try {
+		const BOOL status = CloseHandle(m_handle);
+		assert(status != FALSE);
 	}
-
-	if (number_of_bytes_read != sizeof(uint8_t)) {
-		throw std::exception("EOF");
+	catch (...) {
+		PRINT_LOG(L"Something bad happened while closing the File.");
 	}
-
-	return byte;
 }
 
 Buffer File::read(uint32_t length) const
@@ -41,7 +32,7 @@ Buffer File::read(uint32_t length) const
 	}
 
 	if (number_of_bytes_read != length) {
-		throw std::exception("An error has occurred while trying to read the file, couldn't read all the bytes.");
+		throw std::exception("EOF");
 	}
 
 	return buffer;
@@ -66,13 +57,28 @@ HANDLE File::open(const std::filesystem::path& path)
 	return handle;
 }
 
-File::~File()
+Buffer FileUtils::read_line(const File& file)
 {
-	try {
-		const BOOL status = CloseHandle(m_handle);
-		assert(status != FALSE);
+	uint8_t byte = 0;
+	Buffer buffer;
+
+	while (byte != NEWLINE) {
+		try {
+			byte = FileUtils::read_byte(file);
+			buffer.push_back(byte);
+		}
+		catch (const std::exception& e) {
+			if (std::strncmp(e.what(), "EOF", EOF_LENGTH) == NULL) {
+				if (buffer.size() == NULL) {
+					throw e;
+				}
+
+				break;
+			}
+
+			throw e;
+		}
 	}
-	catch (...) {
-		PRINT_LOG(L"Something bad happened while closing the File.");
-	}
+
+	return buffer;
 }

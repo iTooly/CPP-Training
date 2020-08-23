@@ -29,12 +29,7 @@ namespace BufferUtils
 	}
 }
 
-namespace FileUtils
-{
-	std::vector<Buffer> read_lines(const File& file);
-}
-
 namespace StrUtils
 {
-	std::pair<std::wstring, std::wstring> split(const std::wstring str, std::wstring delimiter);
+	std::pair<std::wstring, std::wstring> split(const std::wstring str, char delimiter);
 }
