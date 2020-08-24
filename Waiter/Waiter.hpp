@@ -1,8 +1,7 @@
 #pragma once
 #include "Config.hpp"
 
-// CR: what program?
-namespace Program
+namespace Waiter
 {
 	void run(const Config& config);
 };

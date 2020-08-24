@@ -19,7 +19,7 @@ namespace LogUtils
 
 namespace StrUtils
 {
-	std::pair<std::wstring, std::wstring> split(const std::wstring& str, char delimiter);
+	std::vector<std::wstring> split(std::wstring str, char delimiter);
 }
 
 namespace BufferUtils

@@ -15,14 +15,14 @@ std::map<std::wstring, std::wstring> Config::parse(const std::filesystem::path& 
 {
 	std::map<std::wstring, std::wstring> params;
 	const File file(path);
-	BOOL eof_flag = FALSE;
+	const Buffer buffer = FileUtils::read_all(file);
+	constexpr char NEWLINE = '\n';
+	const std::vector<std::wstring> lines = StrUtils::split(BufferUtils::buffer_to_wstring(buffer), NEWLINE);
 
-	// CR: instead of all these loops and checking for the EOF, why not read the whole file and split it by the newline?
-	while (eof_flag == FALSE) {
-		Buffer buffer = FileUtils::read_line(file, eof_flag);
+	for (const std::wstring& line : lines) {
 		constexpr char DELIMITER = '=';
-		std::pair<std::wstring, std::wstring> pair = StrUtils::split(BufferUtils::buffer_to_wstring(buffer), DELIMITER);
-		params.insert(pair);
+		std::vector<std::wstring> items = StrUtils::split(line, DELIMITER);
+		params.insert(std::make_pair(items[0], items[1]));
 	}
 
 	return params;

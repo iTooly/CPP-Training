@@ -1,12 +1,19 @@
 #include "Utils.hpp"
 
-std::pair<std::wstring, std::wstring> StrUtils::split(const std::wstring& str, char delimiter)
+std::vector<std::wstring> StrUtils::split(std::wstring str, char delimiter)
 {
-	const size_t pos = str.find(delimiter);
-	std::wstring key = str.substr(0, pos);
-	std::wstring val = str.substr(pos + sizeof(char), str.size());
-
-	return { key, val }; // CR: use make_pair
+	std::vector<std::wstring> list;
+	size_t pos = 0;
+	
+	while (pos != std::wstring::npos)
+	{
+		pos = str.find(delimiter);
+		list.push_back(str.substr(0, pos));
+		
+		str = str.substr(pos + sizeof(char), str.size());
+	}
+	
+	return list;
 }
 
 uint32_t BufferUtils::buffer_to_int(const Buffer& buffer)

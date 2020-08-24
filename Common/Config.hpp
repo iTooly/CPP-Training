@@ -7,7 +7,8 @@ class Config final
 {
 public:
 	explicit Config(const std::filesystem::path& path);
-	// CR: where is the destructor?
+	~Config() = default;
+	
 	std::wstring get(const std::wstring& key) const;
 
 	Config(const Config&) = delete;

@@ -1,9 +1,15 @@
-#include "Main.hpp"
 #include "Config.hpp"
-#include "Program.hpp"
+#include "Waiter.hpp"
 #include "Utils.hpp"
 
 #include <exception>
+
+enum WaiterArguments
+{
+	EXE_PATH,
+	CONFIG_PATH,
+	ARGS_COUNT
+};
 
 int wmain(const uint32_t argc, wchar_t* argv[])
 {
@@ -13,7 +19,7 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 		}
 
 		const Config config(argv[CONFIG_PATH]);
-		Program::run(config);
+		Waiter::run(config);
 
 		return EXIT_SUCCESS;
 	}

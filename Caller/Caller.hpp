@@ -1,9 +1,7 @@
 #pragma once
 #include "Config.hpp"
 
-// CR: this does not compile
-// CR: what program?
-namespace Program
+namespace Caller
 {
 	void run(const Config& config);
 };

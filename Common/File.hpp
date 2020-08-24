@@ -11,6 +11,7 @@ public:
 	~File();
 
 	Buffer read(uint32_t length) const;
+	uint64_t size() const;
 
 	File(const File&) = delete;
 	File(File&&) = delete;
@@ -25,7 +26,11 @@ private:
 
 namespace FileUtils
 {
-	// CR: use cpp bool
-	uint8_t read_byte(const File& file, BOOL& eof_flag_out);
-	Buffer read_line(const File& file, BOOL& eof_flag_out);
+	Buffer read_all(const File& file);
+
+	/*
+	 * DEPRECATED
+	 */
+	//uint8_t read_byte(const File& file, bool& eof_flag_out);
+	//Buffer read_line(const File& file, bool& eof_flag_out);
 }

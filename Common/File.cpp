@@ -38,6 +38,19 @@ Buffer File::read(uint32_t length) const
 	return buffer;
 }
 
+uint64_t File::size() const
+{
+	LARGE_INTEGER file_size = {0, 0};
+	const bool status = GetFileSizeEx(m_handle, &file_size);
+
+	if (status == FALSE)
+	{
+		throw std::exception("An error has occurred while trying to get the file size.");
+	}
+
+	return file_size.QuadPart;
+}
+
 HANDLE File::open(const std::filesystem::path& path)
 {
 	constexpr LPSECURITY_ATTRIBUTES DEFAULT_SECURITY_ATTRIBUTES = nullptr;
@@ -57,39 +70,47 @@ HANDLE File::open(const std::filesystem::path& path)
 	return handle;
 }
 
-uint8_t FileUtils::read_byte(const File& file, BOOL& eof_flag_out)
+/* TODO: If needed in the future to enable read files with the size bigger then uint32_t max */
+Buffer FileUtils::read_all(const File& file)
 {
-	try
-	{
-		eof_flag_out = FALSE;
-		constexpr size_t FIRST_INDEX = 0;
-		return file.read(sizeof(uint8_t))[FIRST_INDEX];
-	}
-	catch (const std::exception& e) {
-		constexpr size_t EOF_LENGTH = 3;
-		if (std::strncmp(e.what(), "EOF", EOF_LENGTH) == NULL) {
-			eof_flag_out = TRUE;
-			return NULL;
-		}
-
-		throw e;
-	}
+	return file.read(static_cast<uint32_t>(file.size()));
 }
 
-Buffer FileUtils::read_line(const File& file, BOOL& eof_flag_out)
-{
-	eof_flag_out = FALSE;
-	
-	uint8_t byte = 0;
-	Buffer buffer;
+/*
+ *	DEPRECATED
+ */
 
-	constexpr char NEWLINE = '\n';
-	
-	while (byte != NEWLINE && eof_flag_out == FALSE) {
-		// CR: FileUtils is redundent
-		byte = FileUtils::read_byte(file, eof_flag_out);
-		buffer.push_back(byte);
-	}
-
-	return buffer;
-}
+//uint8_t FileUtils::read_byte(const File& file, bool& eof_flag_out)
+//{
+//	try {
+//		eof_flag_out = false;
+//		constexpr size_t FIRST_INDEX = 0;
+//		return file.read(sizeof(uint8_t))[FIRST_INDEX];
+//	}
+//	catch (const std::exception& e) {
+//		constexpr size_t EOF_LENGTH = 3;
+//		if (std::strncmp(e.what(), "EOF", EOF_LENGTH) == NULL) {
+//			eof_flag_out = true;
+//			return NULL;
+//		}
+//
+//		throw e;
+//	}
+//}
+//
+//Buffer FileUtils::read_line(const File& file, bool& eof_flag_out)
+//{
+//	eof_flag_out = false;
+//
+//	uint8_t byte = 0;
+//	Buffer buffer;
+//
+//	constexpr char NEWLINE = '\n';
+//
+//	while (byte != NEWLINE && eof_flag_out == false) {
+//		byte = read_byte(file, eof_flag_out);
+//		buffer.push_back(byte);
+//	}
+//
+//	return buffer;
+//}
