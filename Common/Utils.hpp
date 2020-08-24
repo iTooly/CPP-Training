@@ -18,15 +18,8 @@ namespace LogUtils
 
 namespace BufferUtils
 {
-	inline uint32_t buffer_to_int(const Buffer& buffer)
-	{
-		return *reinterpret_cast<const uint32_t*>(buffer.data());
-	}
-
-	inline std::wstring buffer_to_wstring(const Buffer& buffer)
-	{
-		return std::wstring(buffer.begin(), buffer.end());
-	}
+	inline uint32_t buffer_to_int(const Buffer& buffer);
+	inline std::wstring buffer_to_wstring(const Buffer& buffer);
 }
 
 namespace StrUtils

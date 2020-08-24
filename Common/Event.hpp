@@ -1,5 +1,4 @@
 #pragma once
-#include "Types.hpp"
 
 #include <Windows.h>
 #include <string>

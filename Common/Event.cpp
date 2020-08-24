@@ -21,7 +21,7 @@ Event::~Event()
 
 void Event::set() const
 {
-	BOOL status = SetEvent(m_handle);
+	const BOOL status = SetEvent(m_handle);
 
 	if (status == FALSE) {
 		throw std::exception("An error has occurred while trying to set the Event.");
@@ -30,7 +30,7 @@ void Event::set() const
 
 void Event::wait() const
 {
-	uint32_t status = WaitForSingleObject(m_handle, INFINITE);
+	const uint32_t status = WaitForSingleObject(m_handle, INFINITE);
 
 	if (status != WAIT_OBJECT_0) {
 		throw std::exception("An error has occurred while listening to the Event.");
@@ -43,12 +43,12 @@ HANDLE Event::open(const std::wstring& name)
 	constexpr BOOL MANUAL_RESET = TRUE;
 	constexpr BOOL INIT_STATE_NONSIGNALED = FALSE;
 
-	HANDLE handle = CreateEventW(DEFAULT_SECURITY_ATTRIBUTES,
-								 MANUAL_RESET,
-								 INIT_STATE_NONSIGNALED,
-								 name.c_str());
+	const HANDLE handle = CreateEventW(DEFAULT_SECURITY_ATTRIBUTES,
+	                                   MANUAL_RESET,
+	                                  INIT_STATE_NONSIGNALED,
+	                                   name.c_str());
 
-	if (handle == NULL) {
+	if (handle == nullptr) {
 		throw std::exception("An error has occurred while trying to open the Event.");
 	}
 

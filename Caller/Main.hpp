@@ -8,5 +8,7 @@ enum FileArgs
 	ARGS_COUNT
 };
 
-int wmain(const uint32_t argc, wchar_t* argv[]);
-static void run(const Config& config);
+namespace Main
+{
+	void run(const Config& config);
+}

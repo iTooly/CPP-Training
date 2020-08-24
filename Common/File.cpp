@@ -57,27 +57,37 @@ HANDLE File::open(const std::filesystem::path& path)
 	return handle;
 }
 
-Buffer FileUtils::read_line(const File& file)
+uint8_t FileUtils::read_byte(const File& file, BOOL& eof_flag_out)
 {
+	try
+	{
+		eof_flag_out = FALSE;
+		constexpr size_t FIRST_INDEX = 0;
+		return file.read(sizeof(uint8_t))[FIRST_INDEX];
+	}
+	catch (const std::exception& e) {
+		constexpr size_t EOF_LENGTH = 3;
+		if (std::strncmp(e.what(), "EOF", EOF_LENGTH) == NULL) {
+			eof_flag_out = TRUE;
+			return NULL;
+		}
+
+		throw e;
+	}
+}
+
+Buffer FileUtils::read_line(const File& file, BOOL& eof_flag_out)
+{
+	eof_flag_out = FALSE;
+	
 	uint8_t byte = 0;
 	Buffer buffer;
 
-	while (byte != NEWLINE) {
-		try {
-			byte = FileUtils::read_byte(file);
-			buffer.push_back(byte);
-		}
-		catch (const std::exception& e) {
-			if (std::strncmp(e.what(), "EOF", EOF_LENGTH) == NULL) {
-				if (buffer.size() == NULL) {
-					throw e;
-				}
-
-				break;
-			}
-
-			throw e;
-		}
+	constexpr char NEWLINE = '\n';
+	
+	while (byte != NEWLINE && eof_flag_out == EOF_NOT_SET) {
+		byte = FileUtils::read_byte(file, eof_flag_out);
+		buffer.push_back(byte);
 	}
 
 	return buffer;

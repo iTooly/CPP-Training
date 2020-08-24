@@ -1,6 +1,7 @@
 #include "Main.hpp"
 #include "Event.hpp"
 #include "Config.hpp"
+#include "ConfigKeys.hpp"
 #include "Utils.hpp"
 
 #include <exception>
@@ -12,8 +13,8 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 			throw std::exception("Config file is missing! usage: program.exe <config_path>");
 		}
 
-		Config config(argv[CONFIG_PATH]);
-		run(config);
+		const Config config(argv[CONFIG_PATH]);
+		Main::run(config);
 
 		return EXIT_SUCCESS;
 	}
@@ -27,8 +28,8 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 	return EXIT_FAILURE;
 }
 
-static void run(const Config& config)
+void Main::run(const Config& config)
 {
-	Event event(config.get(EVENT_NAME_KEY));
+	const Event event(config.get(EVENT_NAME_KEY));
 	event.set();
 }

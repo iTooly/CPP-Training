@@ -4,8 +4,6 @@
 #include <Windows.h>
 #include <filesystem>
 
-constexpr size_t EOF_LENGTH = 3;
-
 class File final
 {
 public:
@@ -27,13 +25,7 @@ private:
 
 namespace FileUtils
 {
-	constexpr size_t FIRST_INDEX = 0;
-	constexpr char NEWLINE = '\n';
-
-	inline uint8_t read_byte(const File& file)
-	{
-		return file.read(sizeof(uint8_t))[FIRST_INDEX];
-	}
-
-	Buffer read_line(const File& file);
+	constexpr BOOL EOF_NOT_SET = FALSE;
+	inline uint8_t read_byte(const File& file, BOOL& eof_flag_out);
+	Buffer read_line(const File& file, BOOL& eof_flag_out);
 }
