@@ -24,6 +24,6 @@ namespace StrUtils
 
 namespace BufferUtils
 {
-	inline uint32_t buffer_to_int(const Buffer& buffer);
-	inline std::wstring buffer_to_wstring(const Buffer& buffer);
+	uint32_t buffer_to_int(const Buffer& buffer);
+	std::wstring buffer_to_wstring(const Buffer& buffer);
 }
