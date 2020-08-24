@@ -6,7 +6,7 @@ std::pair<std::wstring, std::wstring> StrUtils::split(const std::wstring& str, c
 	std::wstring key = str.substr(0, pos);
 	std::wstring val = str.substr(pos + sizeof(char), str.size());
 
-	return { key, val };
+	return { key, val }; // CR: use make_pair
 }
 
 uint32_t BufferUtils::buffer_to_int(const Buffer& buffer)

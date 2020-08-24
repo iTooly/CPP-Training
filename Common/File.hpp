@@ -25,6 +25,7 @@ private:
 
 namespace FileUtils
 {
+	// CR: use cpp bool
 	uint8_t read_byte(const File& file, BOOL& eof_flag_out);
 	Buffer read_line(const File& file, BOOL& eof_flag_out);
 }

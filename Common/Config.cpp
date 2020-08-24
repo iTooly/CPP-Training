@@ -17,6 +17,7 @@ std::map<std::wstring, std::wstring> Config::parse(const std::filesystem::path& 
 	const File file(path);
 	BOOL eof_flag = FALSE;
 
+	// CR: instead of all these loops and checking for the EOF, why not read the whole file and split it by the newline?
 	while (eof_flag == FALSE) {
 		Buffer buffer = FileUtils::read_line(file, eof_flag);
 		constexpr char DELIMITER = '=';

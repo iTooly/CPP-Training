@@ -18,7 +18,7 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 		if (argc < ARGS_COUNT) {
 			throw std::exception("Path is missing! usage: program.exe <path>");
 		}
-
+		// CR: what did we say about splitting the main
 		const File file(argv[FILE_PATH]);
 		const Buffer result = file.read(BUFFER_SIZE);
 

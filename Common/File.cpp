@@ -86,6 +86,7 @@ Buffer FileUtils::read_line(const File& file, BOOL& eof_flag_out)
 	constexpr char NEWLINE = '\n';
 	
 	while (byte != NEWLINE && eof_flag_out == FALSE) {
+		// CR: FileUtils is redundent
 		byte = FileUtils::read_byte(file, eof_flag_out);
 		buffer.push_back(byte);
 	}
