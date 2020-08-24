@@ -85,7 +85,7 @@ Buffer FileUtils::read_line(const File& file, BOOL& eof_flag_out)
 
 	constexpr char NEWLINE = '\n';
 	
-	while (byte != NEWLINE && eof_flag_out == EOF_NOT_SET) {
+	while (byte != NEWLINE && eof_flag_out == FALSE) {
 		byte = FileUtils::read_byte(file, eof_flag_out);
 		buffer.push_back(byte);
 	}

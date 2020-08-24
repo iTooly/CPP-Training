@@ -17,7 +17,7 @@ std::map<std::wstring, std::wstring> Config::parse(const std::filesystem::path& 
 	const File file(path);
 	BOOL eof_flag = FALSE;
 
-	while (eof_flag == FileUtils::EOF_NOT_SET) {
+	while (eof_flag == FALSE) {
 		Buffer buffer = FileUtils::read_line(file, eof_flag);
 		constexpr char DELIMITER = '=';
 		std::pair<std::wstring, std::wstring> pair = StrUtils::split(BufferUtils::buffer_to_wstring(buffer), DELIMITER);

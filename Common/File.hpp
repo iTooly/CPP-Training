@@ -25,7 +25,6 @@ private:
 
 namespace FileUtils
 {
-	constexpr BOOL EOF_NOT_SET = FALSE;
 	inline uint8_t read_byte(const File& file, BOOL& eof_flag_out);
 	Buffer read_line(const File& file, BOOL& eof_flag_out);
 }
