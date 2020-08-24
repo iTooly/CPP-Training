@@ -1,5 +1,4 @@
 #pragma once
-#include "Config.hpp"
 
 enum FileArgs
 {
@@ -7,8 +6,3 @@ enum FileArgs
 	CONFIG_PATH,
 	ARGS_COUNT
 };
-
-namespace Main
-{
-	void run(const Config& config);
-}

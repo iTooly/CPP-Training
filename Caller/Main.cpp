@@ -1,7 +1,6 @@
 #include "Main.hpp"
-#include "Event.hpp"
 #include "Config.hpp"
-#include "ConfigKeys.hpp"
+#include "Program.h"
 #include "Utils.hpp"
 
 #include <exception>
@@ -14,7 +13,7 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 		}
 
 		const Config config(argv[CONFIG_PATH]);
-		Main::run(config);
+		Program::run(config);
 
 		return EXIT_SUCCESS;
 	}
@@ -26,10 +25,4 @@ int wmain(const uint32_t argc, wchar_t* argv[])
 	}
 
 	return EXIT_FAILURE;
-}
-
-void Main::run(const Config& config)
-{
-	const Event event(config.get(EVENT_NAME_KEY));
-	event.set();
 }
