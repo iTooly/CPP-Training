@@ -25,6 +25,6 @@ private:
 
 namespace FileUtils
 {
-	inline uint8_t read_byte(const File& file, BOOL& eof_flag_out);
+	uint8_t read_byte(const File& file, BOOL& eof_flag_out);
 	Buffer read_line(const File& file, BOOL& eof_flag_out);
 }
