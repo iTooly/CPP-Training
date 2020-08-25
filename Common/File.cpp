@@ -5,7 +5,8 @@
 #include <cassert>
 
 File::File(const std::filesystem::path& path)
-	: m_handle(open(path)) { } // CR: put in new line
+	: m_handle(open(path))
+{ }
 
 File::~File()
 {
@@ -40,14 +41,10 @@ Buffer File::read(uint32_t length) const
 
 uint64_t File::size() const
 {
-	// CR: you can just do :
-	// LARGE_INTEGER file_size{}; 
-	LARGE_INTEGER file_size = {0, 0};
-	// CR: the return value is a c BOOl, not a cpp bool
-	const bool status = GetFileSizeEx(m_handle, &file_size);
+	LARGE_INTEGER file_size{ 0, 0 };
+	const BOOL status = GetFileSizeEx(m_handle, &file_size);
 
-	if (status == FALSE)
-	{
+	if (status == FALSE) {
 		throw std::exception("An error has occurred while trying to get the file size.");
 	}
 
@@ -78,43 +75,3 @@ Buffer FileUtils::read_all(const File& file)
 {
 	return file.read(static_cast<uint32_t>(file.size()));
 }
-
-// CR: delete
-/*
- *	DEPRECATED
- */
-
-//uint8_t FileUtils::read_byte(const File& file, bool& eof_flag_out)
-//{
-//	try {
-//		eof_flag_out = false;
-//		constexpr size_t FIRST_INDEX = 0;
-//		return file.read(sizeof(uint8_t))[FIRST_INDEX];
-//	}
-//	catch (const std::exception& e) {
-//		constexpr size_t EOF_LENGTH = 3;
-//		if (std::strncmp(e.what(), "EOF", EOF_LENGTH) == NULL) {
-//			eof_flag_out = true;
-//			return NULL;
-//		}
-//
-//		throw e;
-//	}
-//}
-//
-//Buffer FileUtils::read_line(const File& file, bool& eof_flag_out)
-//{
-//	eof_flag_out = false;
-//
-//	uint8_t byte = 0;
-//	Buffer buffer;
-//
-//	constexpr char NEWLINE = '\n';
-//
-//	while (byte != NEWLINE && eof_flag_out == false) {
-//		byte = read_byte(file, eof_flag_out);
-//		buffer.push_back(byte);
-//	}
-//
-//	return buffer;
-//}

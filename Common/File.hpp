@@ -10,8 +10,8 @@ public:
 	explicit File(const std::filesystem::path& path);
 	~File();
 
-	Buffer read(uint32_t length) const;
-	uint64_t size() const; // CR: no_discard
+	[[nodiscard]] Buffer read(uint32_t length) const;
+	[[nodiscard]] uint64_t size() const; // CR: no_discard
 
 	File(const File&) = delete;
 	File(File&&) = delete;
@@ -27,11 +27,4 @@ private:
 namespace FileUtils
 {
 	Buffer read_all(const File& file);
-
-	// CR: remove this
-	/*
-	 * DEPRECATED
-	 */
-	//uint8_t read_byte(const File& file, bool& eof_flag_out);
-	//Buffer read_line(const File& file, bool& eof_flag_out);
 }

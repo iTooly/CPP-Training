@@ -13,12 +13,13 @@ std::wstring Config::get(const std::wstring& key) const
 
 std::map<std::wstring, std::wstring> Config::parse(const std::filesystem::path& path)
 {
-	std::map<std::wstring, std::wstring> params; // CR: move this closer to usage
 	const File file(path);
 	const Buffer buffer = FileUtils::read_all(file);
 	constexpr char NEWLINE = '\n';
+	
 	const std::vector<std::wstring> lines = StrUtils::split(BufferUtils::buffer_to_wstring(buffer), NEWLINE);
-
+	std::map<std::wstring, std::wstring> params;
+	
 	for (const std::wstring& line : lines) {
 		constexpr char DELIMITER = '=';
 		std::vector<std::wstring> items = StrUtils::split(line, DELIMITER);

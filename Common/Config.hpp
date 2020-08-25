@@ -9,8 +9,7 @@ public:
 	explicit Config(const std::filesystem::path& path);
 	~Config() = default;
 
-	// CR: you can mark this as [[no_discard]]
-	std::wstring get(const std::wstring& key) const;
+	[[nodiscard]] std::wstring get(const std::wstring& key) const;
 
 	Config(const Config&) = delete;
 	Config(Config&&) = delete;
