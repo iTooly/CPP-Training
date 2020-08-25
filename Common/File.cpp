@@ -5,7 +5,7 @@
 #include <cassert>
 
 File::File(const std::filesystem::path& path)
-	: m_handle(open(path)) { }
+	: m_handle(open(path)) { } // CR: put in new line
 
 File::~File()
 {
@@ -40,7 +40,10 @@ Buffer File::read(uint32_t length) const
 
 uint64_t File::size() const
 {
+	// CR: you can just do :
+	// LARGE_INTEGER file_size{}; 
 	LARGE_INTEGER file_size = {0, 0};
+	// CR: the return value is a c BOOl, not a cpp bool
 	const bool status = GetFileSizeEx(m_handle, &file_size);
 
 	if (status == FALSE)
@@ -76,6 +79,7 @@ Buffer FileUtils::read_all(const File& file)
 	return file.read(static_cast<uint32_t>(file.size()));
 }
 
+// CR: delete
 /*
  *	DEPRECATED
  */

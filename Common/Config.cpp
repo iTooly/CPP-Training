@@ -13,7 +13,7 @@ std::wstring Config::get(const std::wstring& key) const
 
 std::map<std::wstring, std::wstring> Config::parse(const std::filesystem::path& path)
 {
-	std::map<std::wstring, std::wstring> params;
+	std::map<std::wstring, std::wstring> params; // CR: move this closer to usage
 	const File file(path);
 	const Buffer buffer = FileUtils::read_all(file);
 	constexpr char NEWLINE = '\n';

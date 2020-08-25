@@ -11,7 +11,7 @@ public:
 	~File();
 
 	Buffer read(uint32_t length) const;
-	uint64_t size() const;
+	uint64_t size() const; // CR: no_discard
 
 	File(const File&) = delete;
 	File(File&&) = delete;
@@ -28,6 +28,7 @@ namespace FileUtils
 {
 	Buffer read_all(const File& file);
 
+	// CR: remove this
 	/*
 	 * DEPRECATED
 	 */
