@@ -179,6 +179,9 @@
     <ClInclude Include="ConfigKeys.hpp" />
     <ClInclude Include="Event.hpp" />
     <ClInclude Include="File.hpp" />
+    <ClInclude Include="FileConfig.hpp" />
+    <ClInclude Include="RegistryConfig.hpp" />
+    <ClInclude Include="RegistryKey.hpp" />
     <ClInclude Include="Types.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>
@@ -186,10 +189,14 @@
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="File.cpp" />
+    <ClCompile Include="FileConfig.cpp" />
+    <ClCompile Include="RegistryConfig.cpp" />
+    <ClCompile Include="RegistryKey.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Config.ini" />
+    <None Include="Config.reg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
